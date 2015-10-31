@@ -34,14 +34,43 @@ var states;
                 }
             }
             this.addChild(this.world);
+            this.player = new createjs.Sprite(playerSheet, "p1_front");
+            this.player.name = "player";
+            this.player.x = 50;
+            this.player.y = 240;
+            this.addChild(this.player);
             stage.addChild(this);
         };
         Game.prototype.update = function () {
+            //this.player.y += 9.8;
+            this.player.y += this.playerWorldCollisionCheck();
+        };
+        Game.prototype.colliding = function (s1, s2) {
+            if (s1.x < s2.x + s2.getBounds().width && s1.x > s2.x)
+                console.log("collision on projected X axis");
+            if (s1.x + s1.getBounds().x < s2.x + s2.getBounds().width && s1.x + s1.getBounds().x > s2.x)
+                console.log("collision on projected X axis");
+            return 0;
+        };
+        Game.prototype.playerWorldCollisionCheck = function () {
+            for (var l = 0; l < this.world.getNumChildren(); l++) {
+                if (this.world.getChildAt(l).name == "collision") {
+                    var x = this.world.getChildAt(l).x - this.player.x;
+                    var y = this.world.getChildAt(l).y - this.player.y;
+                    if (Math.sqrt(x * x + y * y) < 400) {
+                        console.log("collision check with: " + l);
+                        console.log(this.colliding(this.player, this.world.getChildAt(l)));
+                    }
+                }
+            }
+            return 0;
         };
         Game.prototype.getWorldPiece = function (val) {
             if (val == ".") {
                 console.log("Returning one");
-                return new createjs.Sprite(worldSheet, "grassMid");
+                var tmp = new createjs.Sprite(worldSheet, "grassMid");
+                tmp.name = "collision";
+                return tmp;
             }
             else if (val == "a") {
                 console.log("returing full ground");

@@ -37,6 +37,53 @@ var manifest = [
     //{ id: "StartButton", src: "../../Assets/images/StartButton.png" },
 ];
 
+var playerSheet: createjs.SpriteSheet;
+var playerData = {
+
+"images": [
+    "../../Assets/images/player/atlas.png"
+],
+
+"frames": [
+    [2, 2, 67, 94, 0, 0, 0],
+    [71, 2, 71, 93, 0, 0, -2],
+    [144, 2, 70, 93, 0, 0, -4],
+    [216, 2, 67, 93, 0, -3, -4],
+    [285, 2, 66, 93, 0, -5, -1],
+    [353, 2, 72, 92, 0, 0, -1],
+    [427, 2, 71, 92, 0, -1, 0],
+    [500, 2, 70, 92, 0, 0, -4],
+    [572, 2, 69, 92, 0, 0, 0],
+    [643, 2, 66, 92, 0, 0, 0],
+    [711, 2, 66, 92, 0, 0, 0],
+    [779, 2, 66, 92, 0, -6, -1],
+    [847, 2, 66, 92, 0, -3, -5],
+    [915, 2, 66, 92, 0, -3, -5],
+    [983, 2, 66, 92, 0, -4, -3],
+    [1051, 2, 69, 71, 0, 0, 0]
+],
+
+"animations": {
+    "p1_jump": [0],
+    "p1_walk05": [1],
+    "p1_walk07": [2],
+    "p1_walk10": [3],
+    "p1_walk01": [4],
+    "p1_walk04": [5],
+    "p1_walk03": [6],
+    "p1_walk06": [7],
+    "p1_hurt": [8],
+    "p1_front": [9],
+    "p1_stand": [10],
+    "p1_walk02": [11],
+    "p1_walk08": [12],
+    "p1_walk09": [13],
+    "p1_walk11": [14],
+    "p1_duck": [15]
+},
+};
+
+
 var enemySheet: createjs.SpriteSheet;
 var enemyData = {
 
@@ -228,8 +275,10 @@ var worldData = {
 //}
 
 function init():void {
+    playerSheet = new createjs.SpriteSheet(playerData);
     enemySheet = new createjs.SpriteSheet(enemyData);
     worldSheet = new createjs.SpriteSheet(worldData);
+    
     canvas = document.getElementById("canvas"); // reference to canvas element
     stage = new createjs.Stage(canvas); // passing canvas to stage
     stage.enableMouseOver(20); // enable mouse events
