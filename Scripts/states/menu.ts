@@ -17,14 +17,6 @@
 
         public update(): void {
         }
-
-        // PRIVATE METHODS ++++++++++++++++++++++++++++++++++++++++++++++
-        // Callback function / Event Handler for Start Button Click
-        private _clickStartButton(event: createjs.MouseEvent): void {
-            createjs.Sound.play("yay"); // activate static class play 
-            changeState(config.PLAY_STATE);
-        }
-
     }
 
 

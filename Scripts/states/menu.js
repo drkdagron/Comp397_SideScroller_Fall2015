@@ -8,28 +8,17 @@ var states;
     // MENU CLASS
     var Menu = (function (_super) {
         __extends(Menu, _super);
+        // PRIVATE INSTANCE VARIABLES
         // CONSTRUCTOR
         function Menu() {
             _super.call(this);
         }
         // PUBLIC METHODS
         Menu.prototype.start = function () {
-            // hello label
-            this._helloLabel = new objects.Label("Game Start", "60px Consolas", "#000000", 320, 240);
-            this.addChild(this._helloLabel); // add label to the stage
-            // start button
-            this._startButton = new objects.Button("StartButton", 320, 340);
-            this._startButton.on("click", this._clickStartButton, this); // event listener
-            this.addChild(this._startButton);
+            console.log("menu state started");
             stage.addChild(this);
         };
         Menu.prototype.update = function () {
-        };
-        // PRIVATE METHODS ++++++++++++++++++++++++++++++++++++++++++++++
-        // Callback function / Event Handler for Start Button Click
-        Menu.prototype._clickStartButton = function (event) {
-            createjs.Sound.play("yay"); // activate static class play 
-            changeState(config.PLAY_STATE);
         };
         return Menu;
     })(objects.Scene);
