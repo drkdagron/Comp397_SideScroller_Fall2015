@@ -8,6 +8,7 @@
         private world: createjs.Container;
 
         private player:createjs.Sprite;
+        //private playerMove:boolean;
 
         // CONSTRUCTOR
         constructor() {
@@ -40,6 +41,7 @@
             this.player.name = "player";
             this.player.x = 50;
             this.player.y = 240;
+            this.player.setBounds(0,0,66, 92);
             this.addChild(this.player);
             
             stage.addChild(this);
@@ -47,37 +49,28 @@
 
 
         public update(): void {
-            //this.player.y += 9.8;
-            this.player.y += this.playerWorldCollisionCheck();
+            //if (playerMove)
+            //{
+            this.player.y += 4;
+            this.playerWorldCollisionCheck();
+           // }
         }
-        
-        private colliding(s1:createjs.Sprite, s2) : number
-        {
-            if (s1.x < s2.x + s2.getBounds().width && s1.x > s2.x)
-                console.log("collision on projected X axis");
-            if (s1.x + s1.getBounds().x < s2.x + s2.getBounds().width && s1.x + s1.getBounds().x > s2.x)
-                console.log("collision on projected X axis");
-                                        
-            return 0;
-        }
-        
-        private playerWorldCollisionCheck(): number {
+                
+             
+        private playerWorldCollisionCheck(): void {
             
             for (var l = 0; l < this.world.getNumChildren(); l++)
             {
                 if (this.world.getChildAt(l).name == "collision")
                 {
-                    var x:number = this.world.getChildAt(l).x - this.player.x;
-                    var y:number = this.world.getChildAt(l).y - this.player.y;
-                    if (Math.sqrt(x * x + y * y) < 400)
+                    //find player x, and y centered and the tile centered and check if its at a certain range 
+                    if (this.player.y + 92 > this.world.getChildAt(l).y)
                     {
-                        console.log("collision check with: " + l);
-                        console.log(this.colliding(this.player, this.world.getChildAt(l)));
+                        console.log("collision on y, fixing");
+                        this.player.y = this.world.getChildAt(l).y - 92;
                     }
                 }
             }
-            
-            return 0;
         }
         
         private getWorldPiece(val:string):createjs.Sprite {
