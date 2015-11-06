@@ -16,6 +16,7 @@
 /// <reference path="../states/game.ts" />
 /// <reference path="../states/menu.ts" />
 
+/// <reference path="../gameobjects/player.ts" />
 
 // GLOBAL GAME FRAMEWORK VARIABLES
 var assets: createjs.LoadQueue;

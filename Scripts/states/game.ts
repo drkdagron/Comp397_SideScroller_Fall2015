@@ -7,8 +7,7 @@
         private startingY: number = canvas.clientHeight - 55;
         private world: createjs.Container;
 
-        private player:createjs.Sprite;
-        //private playerMove:boolean;
+        private player:gameobject.Player;
 
         // CONSTRUCTOR
         constructor() {
@@ -37,41 +36,22 @@
             }
             this.addChild(this.world);
             
-            this.player = new createjs.Sprite(playerSheet, "p1_front");
-            this.player.name = "player";
-            this.player.x = 50;
-            this.player.y = 240;
-            this.player.setBounds(0,0,66, 92);
+            this.player = new gameobject.Player(playerSheet, "p1_front");
+            this.player.setPosition(50, 240);
             this.addChild(this.player);
             
             stage.addChild(this);
         }
 
-
         public update(): void {
             //if (playerMove)
             //{
-            this.player.y += 4;
-            this.playerWorldCollisionCheck();
-           // }
+            this.player.update(this.world);
+            // }
         }
                 
              
-        private playerWorldCollisionCheck(): void {
-            
-            for (var l = 0; l < this.world.getNumChildren(); l++)
-            {
-                if (this.world.getChildAt(l).name == "collision")
-                {
-                    //find player x, and y centered and the tile centered and check if its at a certain range 
-                    if (this.player.y + 92 > this.world.getChildAt(l).y)
-                    {
-                        console.log("collision on y, fixing");
-                        this.player.y = this.world.getChildAt(l).y - 92;
-                    }
-                }
-            }
-        }
+        
         
         private getWorldPiece(val:string):createjs.Sprite {
             

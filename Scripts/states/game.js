@@ -1,8 +1,7 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var states;
 (function (states) {
@@ -35,27 +34,16 @@ var states;
                 }
             }
             this.addChild(this.world);
-            this.player = new createjs.Sprite(playerSheet, "p1_front");
-            this.player.name = "player";
-            this.player.x = 50;
-            this.player.y = 240;
-            this.player.setBounds(0, 0, 66, 92);
+            this.player = new gameobject.Player(playerSheet, "p1_front");
+            this.player.setPosition(50, 240);
             this.addChild(this.player);
             stage.addChild(this);
         };
         Game.prototype.update = function () {
-            this.player.y += 4;
-            this.playerWorldCollisionCheck();
-        };
-        Game.prototype.playerWorldCollisionCheck = function () {
-            for (var l = 0; l < this.world.getNumChildren(); l++) {
-                if (this.world.getChildAt(l).name == "collision") {
-                    if (this.player.y + 92 > this.world.getChildAt(l).y) {
-                        console.log("collision on y, fixing");
-                        this.player.y = this.world.getChildAt(l).y - 92;
-                    }
-                }
-            }
+            //if (playerMove)
+            //{
+            this.player.update(this.world);
+            // }
         };
         Game.prototype.getWorldPiece = function (val) {
             if (val == ".") {
