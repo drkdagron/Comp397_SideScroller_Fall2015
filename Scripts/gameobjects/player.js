@@ -9,72 +9,75 @@ var gameobject;
         __extends(Player, _super);
         function Player(sheet, frame) {
             _super.call(this, sheet, frame);
-            this.moveLeft = false;
-            this.moveRight = false;
-            this.setBounds(0, 0, 66, 92);
-            window.onkeydown = this.onkeyboardpress;
-            window.onkeyup = this.onkeyboardrelease;
+            this.defaultTurnRate = 3.5;
+            this.lives = 3;
+            this.score = 0;
+            this.setBounds(0, 0, 37, 70);
+            this.regX = 37 / 2;
+            this.regY = 70 / 2;
         }
-        Player.prototype.onkeyboardpress = function (event) {
-            if (event.keyCode == 37) {
-                this.moveLeft = true;
-                console.log(this.moveLeft);
+        Player.prototype.faceMouse = function () {
+            var x = stage.mouseX;
+            var y = stage.mouseY;
+            var edgeX = x - this.x;
+            var edgeY = y - this.y;
+            var rotateValue = (Math.atan2(edgeY, edgeX) * (180 / Math.PI)) + 90;
+            if (x > this.x) {
+                var ratio = 90;
+                var turn = rotateValue;
+                if (turn > ratio) {
+                    turn -= ratio;
+                }
+                else {
+                    turn = -(-ratio + turn);
+                }
+                turn /= 30;
+                //console.log("TURN RATIO: " + turn);
+                this.moveCar(turn);
+                if (rotateValue < 60) {
+                    rotateValue = 60;
+                }
+                else if (rotateValue > 120) {
+                    rotateValue = 120;
+                }
+                if (rotateValue < 0) {
+                    rotateValue = 0 + 90;
+                }
+                this.rotation = rotateValue;
             }
-            else if (event.keyCode == 39) {
-                this.moveRight = true;
-                console.log(this.moveRight);
+            else {
+                this.rotation = 90;
             }
         };
-        Player.prototype.onkeyboardrelease = function (event) {
-            if (event.keyCode == 37) {
-                this.moveLeft = false;
-                console.log(this.moveLeft);
+        Player.prototype.moveCar = function (turnRate) {
+            if (stage.mouseY > this.y) {
+                this.y += this.defaultTurnRate * turnRate;
             }
-            if (event.keyCode == 39) {
-                this.moveRight = false;
-                console.log(this.moveRight);
+            if (stage.mouseY < this.y) {
+                this.y -= this.defaultTurnRate * turnRate;
             }
         };
-        Player.prototype.update = function (worldTiles) {
-            if (this.moveLeft == true) {
-                this.x += -1;
-            }
-            if (this.moveRight == true) {
-                this.x += 1;
-            }
-            this.y += 4;
-            //this.x += 1;
-            this.playerWorldCollisionCheck(worldTiles);
-            //if (this.moveX != 0)
-            //	this.x += this.moveX * this.speed;
+        Player.prototype.addScore = function (add) {
+            this.score += add;
         };
-        Player.prototype.move = function () {
-            var xMove = 0;
-            if (this.moveLeft)
-                xMove = -1;
-            if (this.moveRight)
-                xMove = 1;
-            xMove * 10;
-            var newX = this.x + xMove;
-            this.setPosition(newX, this.y);
+        Player.prototype.setScore = function (num) {
+            this.score = num;
+        };
+        Player.prototype.getScore = function () {
+            return this.score;
+        };
+        Player.prototype.playerHit = function () {
+            this.lives--;
+        };
+        Player.prototype.getLives = function () {
+            return this.lives;
+        };
+        Player.prototype.update = function () {
+            this.faceMouse();
         };
         Player.prototype.setPosition = function (x, y) {
             this.x = x;
             this.y = y;
-        };
-        Player.prototype.playerWorldCollisionCheck = function (world) {
-            for (var l = 0; l < world.getNumChildren(); l++) {
-                if (world.getChildAt(l).name == "collision") {
-                    var x = this.x + this.getBounds().x / 2 - world.getChildAt(l).x + world.getChildAt(l).getBounds().x;
-                    var y = this.y + this.getBounds().y / 2 - world.getChildAt(l).y + world.getChildAt(l).getBounds().y;
-                    if (Math.sqrt(x * x + y * y) < 150) {
-                        //console.log("colliding with: " + l);
-                        if (this.y + 92 > world.getChildAt(l).y) {
-                            this.y = world.getChildAt(l).y - 92;
-                        }
-                    }
-                }
-            }
         };
         return Player;
     })(createjs.Sprite);

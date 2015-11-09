@@ -8,7 +8,6 @@ var states;
     // MENU CLASS
     var Menu = (function (_super) {
         __extends(Menu, _super);
-        // PRIVATE INSTANCE VARIABLES
         // CONSTRUCTOR
         function Menu() {
             _super.call(this);
@@ -16,9 +15,14 @@ var states;
         // PUBLIC METHODS
         Menu.prototype.start = function () {
             console.log("menu state started");
+            this.background = new gameobject.World(worldSheet, "background");
+            this.addChild(this.background);
+            this.play = new gameobject.UiButton(uiSheet, "play", 320, 360);
+            this.addChild(this.play);
             stage.addChild(this);
         };
         Menu.prototype.update = function () {
+            this.background.update();
         };
         return Menu;
     })(objects.Scene);
