@@ -79,6 +79,11 @@
                     this.player.playerHit();
                     this.lives.text = "Lives: " + this.player.getLives();
                     this.rock[rock].reset();
+                    if (this.player.getLives() == 0)
+                    {
+                        score = this.player.getScore();
+                        changeState(config.OVER_STATE);
+                    }
                 }
             }
             for (var coin = 0; coin < 3; coin++)

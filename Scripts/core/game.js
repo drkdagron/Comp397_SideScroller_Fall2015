@@ -28,6 +28,7 @@ var currentState; // alias for our current state
 var menu;
 var game;
 var over;
+var score;
 // manifest of all our assets
 var manifest = [];
 var playerSheet;
@@ -97,9 +98,13 @@ var uiData = {
     ],
     "frames": [
         [0, 0, 190, 49, 0, 0, 0],
+        [0, 49, 190, 49, 0, 0, 0],
+        [0, 98, 190, 49, 0, 0, 0],
     ],
     "animations": {
         "play": [0],
+        "restart": [1],
+        "menu": [2],
     },
 };
 function init() {

@@ -1,7 +1,8 @@
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    __.prototype = b.prototype;
+    d.prototype = new __();
 };
 var states;
 (function (states) {
@@ -17,9 +18,19 @@ var states;
             console.log("menu state started");
             this.background = new gameobject.World(worldSheet, "background");
             this.addChild(this.background);
+            this.title = new objects.Label("Off-Roader XTREME!", "40px Consolas", "#333", 320, 80);
+            this.addChild(this.title);
+            this.howTo = new objects.Label("Use the mouse to guide the car \n\n" +
+                "through the rocky route! \n\n\n\n" +
+                "Collect coins for points!", "24px Consolas", "#333", 320, 220);
+            this.addChild(this.howTo);
             this.play = new gameobject.UiButton(uiSheet, "play", 320, 360);
+            this.play.on("click", this.startGame, this);
             this.addChild(this.play);
             stage.addChild(this);
+        };
+        Menu.prototype.startGame = function () {
+            changeState(config.PLAY_STATE);
         };
         Menu.prototype.update = function () {
             this.background.update();

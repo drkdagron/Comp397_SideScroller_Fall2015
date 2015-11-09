@@ -35,6 +35,8 @@ var menu: states.Menu;
 var game: states.Game;
 var over: states.Over;
 
+var score:number;
+
 // manifest of all our assets
 var manifest = [
     //{ id: "BackButton", src: "../../Assets/images/BackButton.png" },
@@ -128,10 +130,14 @@ var uiData = {
     
   "frames": [
     [0,0,190,49,0,0,0], 
+    [0,49,190,49,0,0,0],
+    [0,98,190,49,0,0,0],
   ],
   
   "animations": {
     "play": [0],
+    "restart": [1],
+    "menu": [2],
   },
 };
 
