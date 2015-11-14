@@ -15,6 +15,7 @@ var states;
         }
         // PUBLIC METHODS
         Over.prototype.start = function () {
+            createjs.Sound.stop();
             console.log("over state started");
             this.background = new gameobject.World(worldSheet, "world");
             this.addChild(this.background);

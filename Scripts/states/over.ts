@@ -18,6 +18,7 @@
 
         // PUBLIC METHODS
         public start(): void {
+            createjs.Sound.stop();
             console.log("over state started");
             
             this.background = new gameobject.World(worldSheet, "world");
@@ -38,7 +39,7 @@
             this.addChild(this.backButton);
             
             stage.addChild(this);
-
+            
         }
 
         private playAgain(): void {

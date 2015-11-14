@@ -21,7 +21,7 @@ var gameobject;
             this.y = 0;
         };
         World.prototype.update = function () {
-            this.x -= 5;
+            this.x -= this.moveSpeed;
             if (this.x < -(this.sizeX - this.frameX)) {
                 this.reset();
             }

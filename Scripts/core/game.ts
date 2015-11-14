@@ -37,11 +37,14 @@ var over: states.Over;
 
 var score:number;
 
+var background:createjs.Sound;
+
 // manifest of all our assets
 var manifest = [
-    //{ id: "BackButton", src: "../../Assets/images/BackButton.png" },
-    //{ id: "NextButton", src: "../../Assets/images/NextButton.png" },
-    //{ id: "StartButton", src: "../../Assets/images/StartButton.png" },
+    { id: "click", src: "../../Assets/audio/click1.ogg" },
+    { id: "bg", src: "../../Assets/audio/pkmn_route1.mp3" },
+    { id: "hit", src: "../../Assets/audio/thunder.ogg" },
+    { id: "pickup", src: "../../Assets/audio/pickup4.ogg"},
 ];
 
 var playerSheet: createjs.SpriteSheet;
@@ -141,12 +144,24 @@ var uiData = {
   },
 };
 
-function init():void {
+function preload(): void{
+    
+    assets = new createjs.LoadQueue();
+    assets.installPlugin(createjs.Sound);
+    assets.on("complete", init, this);
+    assets.loadManifest(manifest);
+    
     playerSheet = new createjs.SpriteSheet(playerData);
     enemySheet = new createjs.SpriteSheet(enemyData);
     worldSheet = new createjs.SpriteSheet(worldData);
     coinSheet = new createjs.SpriteSheet(coinData);
     uiSheet = new createjs.SpriteSheet(uiData);
+    
+    init();
+}
+
+
+function init():void {
     
     canvas = document.getElementById("canvas"); // reference to canvas element
     stage = new createjs.Stage(canvas); // passing canvas to stage
@@ -158,6 +173,7 @@ function init():void {
     state = config.MENU_STATE;
     changeState(state);
 
+    //createjs.Sound.play("bg", null, 0, 0, -1, 0.05, 0);
 }
 
 // Main Game Loop

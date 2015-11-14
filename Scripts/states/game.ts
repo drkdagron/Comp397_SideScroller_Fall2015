@@ -64,6 +64,8 @@
             this.score = new objects.Label("Score: " + this.player.getScore(), "30px Consolas", "#FFF", 500, 20);
             this.addChild(this.score);
             
+            createjs.Sound.play("bg", 0, 0, 0, -1, 0.5, 0);
+            
             stage.addChild(this);
         }
 
@@ -79,6 +81,7 @@
                     this.player.playerHit();
                     this.lives.text = "Lives: " + this.player.getLives();
                     this.rock[rock].reset();
+                    createjs.Sound.play("hit");
                     if (this.player.getLives() == 0)
                     {
                         score = this.player.getScore();
@@ -91,6 +94,7 @@
                 this.coin[coin].update();
                 if (this.checkCoinCollision(this.coin[coin], this.player))
                 {
+                    createjs.Sound.play("pickup", 0, 0, 0, 0, 1, 0);
                     this.player.addScore(100);
                     this.score.text = "Score: " + this.player.getScore();
                     this.coin[coin].setAlive(false);
